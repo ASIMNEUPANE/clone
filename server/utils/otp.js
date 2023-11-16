@@ -1,6 +1,8 @@
 require("dotenv").config();
 const {totp} = require("otplib")
 
+totp.options = { digits: 6, step: +process.env.JWT_DURATION };
+
 const generateOtp = ()=>{
     totp.options={digits:6, step : process.env.JWT_DURATION};
     return totp.generate(process.env.JWT_SECRET)
