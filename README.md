@@ -18,3 +18,27 @@ if that find password match or not
 create a token using mailpassword 
 if match return a json token
 
+completed 
+
+
+generateFPtoken
+
+checck email
+-if email create token and store ({email,token}) in authmodel
+-
+
+
+
+
+
+forget password 
+check email if email
+verify token
+if verify
+update userModel with new password hash the new password
+and delete the auth model
+
+
+check user ,isactive,isemailverified
+
+

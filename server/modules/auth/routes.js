@@ -37,5 +37,25 @@ router.post("/login", async (req, res, next) => {
     next(e);
   }
 });
+router.put("/generateFPToken", async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    console.log(email)
+    const result = await controller.generateFPToken(email);
+    res.json({ data: result, msg: "success" });
+  } catch (e) {
+    next(e);
+  }
+});
+router.put("/forget-passowrd", async (req, res, next) => {
+  try {
+    const { email, token, password } = req.body;
+    console.log(email,token,password)
+    const result = await controller.forgetPassword(email, token, password);
+    res.json({ data: result, msg: "success" });
+  } catch (e) {
+    next(e);
+  }
+});
 
 module.exports = router;

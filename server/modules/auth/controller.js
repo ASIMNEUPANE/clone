@@ -28,6 +28,8 @@ const verifyEmail = async (email, token) => {
     { isEmailVerified: true, isActive: true },
     { new: true }
   );
+  await authModel.deleteOne({ email });
+  
 };
 
 const regenerate = async (email) => {
@@ -40,8 +42,8 @@ const regenerate = async (email) => {
 };
 
 const login = async (email, password) => {
-  console.log(email,password)
-  const user = await userModel.findOne({ email }).select("+password");;
+  console.log(email, password);
+  const user = await userModel.findOne({ email }).select("+password");
   if (!user) throw new Error("User not found");
   if (!user.isEmailVerified) throw new Error("email is not verified");
   if (!user.isActive)
@@ -59,5 +61,38 @@ const login = async (email, password) => {
     token,
   };
 };
+const generateFPToken = async (email) => {
+  
+  const user = await userModel.findOne({ email }).select("+password");
+  if (!user) throw new Error("user doesnot found");
+  if (!user?.isActive) throw new Error("user has not been activate at..");
+  if (!user?.isEmailVerified)
+    throw new Error("user has not been verified at..");
+  const token = generateOTP();
+  await model.create({email, token});
+};
 
-module.exports = { register, verifyEmail, regenerate, login };
+const forgetPassword = async (email, token, password) => {
+  const user = await model.findOne({
+    email,
+  });
+  if (!user) throw new Error("user doesnot exit");
+  const isValidToken = await verifyOTP(token);
+  if (isValidToken) throw new Error("Token expire");
+  await userModel.findOneAndUpdate(
+    { email },
+    { password: await bcrypt.hash(password, +process.env.SALT_ROUND) },
+
+    { new: true }
+  );
+  await model.deleteOne({ email });
+};
+
+module.exports = {
+  register,
+  verifyEmail,
+  regenerate,
+  login,
+  generateFPToken,
+  forgetPassword,
+};
