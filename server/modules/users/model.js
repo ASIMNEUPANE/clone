@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-
+const {commonSchema}= require('../../utils/commomSchema')
 
 
 const userSchema = new Schema({
@@ -24,6 +24,8 @@ const userSchema = new Schema({
   image:{type:String},
 
   isActive: { type: Boolean, default: false },
+  ...commonSchema 
 });
+
 
 module.exports = model("User", userSchema);

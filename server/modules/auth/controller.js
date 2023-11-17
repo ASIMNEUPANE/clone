@@ -28,7 +28,7 @@ const verifyEmail = async (email, token) => {
     { isEmailVerified: true, isActive: true },
     { new: true }
   );
-  await authModel.deleteOne({ email });
+  await model.deleteOne({ email });
   
 };
 
