@@ -1,34 +1,29 @@
-require("dotenv").config()
-const express = require("express")
-const cors = require("cors")
-
-const mongoose = require ('mongoose')
-
-const PORT = process.env.PORT || 3333
-
-const indexRouter = require("./routes")
-
+require('dotenv').config()
+const mongoose = require('mongoose')
+const express = require('express')
+const cors = require('cors')
+const PORT= process.env.PORT
 const DB_URL = process.env.DB_URL
+const indexRouter = require('./routes')
 
 mongoose.connect(DB_URL).then(()=>{
-    console.log("database is connected")
+    console.log("database connected..")
 })
+
+
 const app = express()
 
-
 app.use(cors())
-app.use(express.static('public'))
-app.use('/', indexRouter)
 app.use(express.json())
+app.use(express.static('public'));
 
+app.use('/', indexRouter)
 
-app.use((error,req,res,next)=>{
-    const errMsg = error ? error.toString() : "something went wrong"
-    res.status(500).json({msg:'', msg:errMsg})
+app.use((err,re,res,next)=>{
+    const errMsg = err ? err.toString() : "something went wrong";
+    res.status(500).json({data:"", msg:errMsg}) 
 })
 
 app.listen(PORT,()=>{
-    console.log(`app is running on ${PORT}`)
+    console.log(`App is running on ${PORT}`)
 })
-
-

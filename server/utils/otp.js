@@ -1,16 +1,17 @@
 require("dotenv").config();
-const {totp} = require("otplib")
+const { totp } = require("otplib");
 
-totp.options = { digits: 6, step: +process.env.JWT_DURATION };
+totp.options = { digits: 6, step: +process.env.OTP_DURATION };
 
-const generateOtp = ()=>{
-    totp.options={digits:6, step : process.env.JWT_DURATION};
-    return totp.generate(process.env.JWT_SECRET)
-}
+const generateOTP = () => {
+  totp.options = { digits: 6, step: 120 };
+  return totp.generate(process.env.OTP_SECRET);
+};
 
-const verifyOtp = (token)=>{
-    return totp.check(token, process.env.OTP_SECRET)
-}
+const verifyOTP = async (token) => {
+  totp.options = { digits: 6, step: 120 };
+  const x = totp.check(token, process.env.OTP_SECRET);
+  return x;
+};
 
-
-module.exports = {generateOtp,verifyOtp};
+module.exports = { generateOTP, verifyOTP };
