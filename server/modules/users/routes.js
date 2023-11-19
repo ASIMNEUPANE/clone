@@ -15,8 +15,8 @@ router.post("/", async (req, res, next) => {
 
 router.get("/", async (req, res, next) => {
   try {
-    const { page, limit } = req.body;
-    const result = await controller.list(page, limit);
+    const { page, limit } = req.query;
+    const result = await controller.list({ page, limit });
     res.json({ data: result, msg: "success" });
   } catch (e) {
     next(e);
@@ -40,6 +40,7 @@ router.put("/", async (req, res, next) => {
     next(e);
   }
 });
+
 router.put("/change-password", async (req, res, next) => {
   try {
     const { oldPassword, newPassword } = req.body;
@@ -53,6 +54,7 @@ router.put("/change-password", async (req, res, next) => {
     next(e);
   }
 });
+
 router.put("/reset-password", async (req, res, next) => {
   try {
     const { id, ...rest } = req.body;
@@ -62,6 +64,7 @@ router.put("/reset-password", async (req, res, next) => {
     next(e);
   }
 });
+
 router.get("/block/:id", async (req, res, next) => {
   try {
     const result = await controller.block(req.params.id, req.body);
@@ -70,6 +73,7 @@ router.get("/block/:id", async (req, res, next) => {
     next(e);
   }
 });
+
 router.get("/:id", async (req, res, next) => {
   try {
     const result = await controller.archived(req.params.id, req.body);
