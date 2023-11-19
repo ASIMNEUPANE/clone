@@ -10,4 +10,4 @@ const commonSchema = {
     updated_by: {type:ObjectId, ref:"User"},
 }
 
-module.exportsd= {commonSchema}
+module.exports= {commonSchema}
