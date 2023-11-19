@@ -48,10 +48,10 @@ const list = async ({ page, limit }) => {
     .allowDiskUse(true);
 };
 const getById = async (id) => {
- return  await model.findOne({ _id: id });
+  return await model.findOne({ _id: id });
 };
 const updateById = async (id, payload) => {
-return  await model.findOneAndUpdate({ _id: id }, payload, { new: true });
+  return await model.findOneAndUpdate({ _id: id }, payload, { new: true });
 };
 
 const changePassword = async (id, oldPassword, newPassword) => {
@@ -62,17 +62,17 @@ const changePassword = async (id, oldPassword, newPassword) => {
   const checkPass = await bcrypt.compare(oldPassword, user?.password);
   if (!checkPass) throw new Error("old password didnot match");
   const newPass = await bcrypt.hash(newPassword, process.env.SALT_ROUND);
- return  await model.findOneAndUpdate(
+  return await model.findOneAndUpdate(
     { _id: user?.id },
     { password: newPass },
     { new: true }
   );
 };
 
-const resetPassword = async (id, payload) => {
+const resetPassword = async (id, password) => {
   const user = await model.findOne({ _id: id });
   if (!user) throw new Error("User not found");
-  const newPass = await bcrypt.hash(payload?.password, process.env.SALT_ROUND);
+const newPass =  await bcrypt.hash(password,  +process.env.SALT_ROUND);
   return await model.findOneAndUpdate(
     { _id: id },
     { password: newPass },
@@ -83,12 +83,21 @@ const resetPassword = async (id, payload) => {
 const block = async (id, payload) => {
   const user = await model.findOne({ _id: id });
   if (!user) throw new Error("User not found");
-  return await model.findOneAndUpdate({_id:id},payload,{new:true})
+  return await model.findOneAndUpdate({ _id: id }, payload, { new: true });
 };
 const archived = async (id, payload) => {
   const user = await model.findOne({ _id: id });
   if (!user) throw new Error("User not found");
- return await model.findOneAndUpdate({_id:id},payload,{new:true})
+  return await model.findOneAndUpdate({ _id: id }, payload, { new: true });
 };
 
-module.exports = { create, list, getById, updateById, changePassword,resetPassword ,block,archived};
+module.exports = {
+  create,
+  list,
+  getById,
+  updateById,
+  changePassword,
+  resetPassword,
+  block,
+  archived,
+};
