@@ -57,3 +57,27 @@ find id check active and verified
 if check 
 
 
+category model design
+
+name:
+slug:
+
+
+secure routes-
+
+const compare role =
+
+
+
+-check req.headers.authoraization
+if split token.split("Bearer )[1];
+ {data} = verify token;
+ get email = data;
+
+ find email in usrer 
+ compare roles of email user roles to required roles
+ ---
+
+
+
+
