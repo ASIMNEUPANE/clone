@@ -41,4 +41,19 @@ and delete the auth model
 
 check user ,isactive,isemailverified
 
+change password 
+
+-check if user and user is active and verified- userModel
+
+check old password with db password with bycript compare
+
+-hash new password with bycript
+
+update the password in usermodel
+
+reset password-
+
+find id check active and verified
+if check 
+
 
