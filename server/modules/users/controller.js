@@ -1,20 +1,24 @@
+
 const model = require("./model");
 
 const bcrypt = require("bcrypt");
 
 const create = async (payload) => {
   const { password, roles, ...rest } = payload;
-  rest.password = await bcrypt.hash(password, process.env.SALT_ROUND);
+  rest.password = await bcrypt.hash(password, +process.env.SALT_ROUND);
   rest.isActive = true;
   rest.isEmailVerified = true;
   return await model.create(rest);
 };
 
-const list = async ({ page, limit }) => {
+const list = async ({ page, limit,search }) => {
   page = Number(page) || 1;
   limit = Number(limit) || 1;
-  return await model
-    .aggregate([
+  const {isArchived} = search
+    return await model
+    .aggregate([{
+      $match:{isArchived: Boolean(isArchived) || false }
+    },
       {
         $facet: {
           metadata: [
@@ -61,7 +65,7 @@ const changePassword = async (id, oldPassword, newPassword) => {
     throw new Error("user is not active or verified yet..");
   const checkPass = await bcrypt.compare(oldPassword, user?.password);
   if (!checkPass) throw new Error("old password didnot match");
-  const newPass = await bcrypt.hash(newPassword, process.env.SALT_ROUND);
+  const newPass = await bcrypt.hash(newPassword, +process.env.SALT_ROUND);
   return await model.findOneAndUpdate(
     { _id: user?.id },
     { password: newPass },
