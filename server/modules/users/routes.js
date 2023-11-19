@@ -57,8 +57,8 @@ router.put("/change-password", async (req, res, next) => {
 
 router.put("/reset-password", async (req, res, next) => {
   try {
-    const { id, ...rest } = req.body;
-    const result = await controller.resetPassword(id, rest);
+    const { id, password,...rest } = req.body;
+    const result = await controller.resetPassword(id, password);
     res.json({ data: result, msg: "success" });
   } catch (e) {
     next(e);
