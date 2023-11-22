@@ -1,6 +1,4 @@
-
 const model = require("./model");
-
 const bcrypt = require("bcrypt");
 
 const create = async (payload) => {
@@ -11,14 +9,15 @@ const create = async (payload) => {
   return await model.create(rest);
 };
 
-const list = async ({ page, limit,search }) => {
+const list = async ({ page, limit, search }) => {
   page = Number(page) || 1;
   limit = Number(limit) || 1;
-  const {isArchived} = search
-    return await model
-    .aggregate([{
-      $match:{isArchived: Boolean(isArchived) || false }
-    },
+  const { isArchived } = search;
+  return await model
+    .aggregate([
+      {
+        $match: { isArchived: Boolean(isArchived) || false },
+      },
       {
         $facet: {
           metadata: [
@@ -76,7 +75,7 @@ const changePassword = async (id, oldPassword, newPassword) => {
 const resetPassword = async (id, password) => {
   const user = await model.findOne({ _id: id });
   if (!user) throw new Error("User not found");
-const newPass =  await bcrypt.hash(password,  +process.env.SALT_ROUND);
+  const newPass = await bcrypt.hash(password, +process.env.SALT_ROUND);
   return await model.findOneAndUpdate(
     { _id: id },
     { password: newPass },

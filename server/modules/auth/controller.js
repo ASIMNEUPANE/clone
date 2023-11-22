@@ -3,14 +3,15 @@ const bcrypt = require("bcrypt");
 const userModel = require("../users/model");
 const { generateOTP, verifyOTP } = require("../../utils/otp");
 const { generateJWT } = require("../../utils/jwt");
+const {mailer} = require("../../services/mailer");
 
 const register = async (payload) => {
   const { password, roles, ...rest } = payload;
   rest.password = await bcrypt.hash(password, +process.env.SALT_ROUND);
   const user = await userModel.create(rest);
   const token = generateOTP();
-  console.log(token);
   await model.create({ email: user?.email, token });
+  return await mailer(user?.email,token)
 };
 
 const verifyEmail = async (email, token) => {
@@ -39,6 +40,9 @@ const regenerate = async (email) => {
   console.log(newToken);
   await model.findOneAndUpdate({ email }, { token: newToken }, { new: true });
   await model.deleteOne({ email });
+  
+  return await mailer(email, newToken);
+
 };
 
 const login = async (email, password) => {
@@ -70,6 +74,7 @@ const generateFPToken = async (email) => {
     throw new Error("user has not been verified at..");
   const token = generateOTP();
   await model.create({email, token});
+ return mailer(email,token)
 };
 
 const forgetPassword = async (email, token, password) => {

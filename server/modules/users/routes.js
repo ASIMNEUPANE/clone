@@ -15,9 +15,9 @@ router.post("/", async (req, res, next) => {
 
 router.get("/", async (req, res, next) => {
   try {
-    const { page, limit,isArchived,name } = req.query;
-    const search = {isArchived,name}
-    const result = await controller.list({ page, limit ,search});
+    const { page, limit, isArchived, name } = req.query;
+    const search = { isArchived, name };
+    const result = await controller.list({ page, limit, search });
     res.json({ data: result, msg: "success" });
   } catch (e) {
     next(e);
@@ -58,7 +58,7 @@ router.put("/change-password", async (req, res, next) => {
 
 router.put("/reset-password", async (req, res, next) => {
   try {
-    const { id, password,...rest } = req.body;
+    const { id, password, ...rest } = req.body;
     const result = await controller.resetPassword(id, password);
     res.json({ data: result, msg: "success" });
   } catch (e) {
