@@ -22,7 +22,7 @@ router.post(
   async (req, res, next) => {
     try {
       if (req.files) {
-        req.bocy.images = [];
+        req.body.images = [];
         req.files.map((file) =>
           req.body.images.push("products/".concat(file.filename))
         );
