@@ -16,7 +16,7 @@ router.get("/", secureAPI(['admin']), async (req, res, next) => {
     req.body.created_by = req.currentUser;
     const {limit ,page,isArchived,name}= req.query
    const search = {isArchived,name}
-    const result = await controller.list(limit,page,search);
+    const result = await controller.list({page,limit,search});
     res.json({ data: result, msg: "success" });
   } catch (e) {
     next(e);
