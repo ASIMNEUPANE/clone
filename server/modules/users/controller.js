@@ -10,10 +10,10 @@ const create = async (payload) => {
 };
 
 const list = async ({ page, limit, search }) => {
-  page = Number(page) || 1;
-  limit = Number(limit) || 1;
+  page = parseInt(page) || 1;
+  limit = parseInt(limit) || 3;
   const { isArchived } = search;
-  return await model
+  const response =  await model
     .aggregate([
       {
         $match: { isArchived: Boolean(isArchived) || false },
@@ -45,10 +45,15 @@ const list = async ({ page, limit, search }) => {
       {
         $project: {
           metadata: 0,
+         
         },
       },
     ])
     .allowDiskUse(true);
+    const newData = response[0];
+    let {data,total}= newData;
+     total = total || 0;
+    return {data,limit,total,page}
 };
 const getById = async (id) => {
   return await model.findOne({ _id: id });
