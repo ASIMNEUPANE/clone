@@ -1,3 +1,9 @@
+#publicproducts
+server/public/products/*
+
+
+!server/public/products/.gitkeep
+
 # Logs
 logs
 *.log

@@ -48,6 +48,7 @@ const list = async ({limit, page, search}) => {
       {
         $project: {
           metadata: 0,
+          
         },
       },
     ])
