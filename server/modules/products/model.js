@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 const { ObjectId } = Schema.Types;
-const { commonSchema } = require("../../utils/commonSchema");
+const { commonSchema } = require('../../utils/commomSchema');
 
 const productSchema = new Schema({
   name: { type: String, required: true },
