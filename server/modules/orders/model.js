@@ -9,8 +9,8 @@ const orderSchema = new Schema({
             price:{type:Number, required:true},
             amount:{type:true},
             products:{type:ObjectId, ref:'Product', required:true},
-
         },
+        
     ],
     paymentMethod:{
         type: String,
