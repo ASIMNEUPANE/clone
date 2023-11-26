@@ -79,5 +79,47 @@ if split token.split("Bearer )[1];
  ---
 
 
+ORDER
+
+-create unique id;
+-extract products from payload;
+products.map((product)=>{
+    extract prodcuts and assign to id, and qunatity = product;
+
+      // decrease the product stock after order made
+
+    find product in in prouct model through id;
+        // update the stock
+            // write the new Quantity to product stock
 
 
+      // create the order
+
+})
+
+
+-----------------pagination step------------
+aggregate-
+
+match;
+sort ; aggregate for more features
+
+1-facet- allow multiple aggregation;{
+metadata: [{$count : "total"}],
+data:[
+    {$skip(1-1)*5},
+   { $limit: 4}       pagination logic;
+],
+}
+
+2.addfields:{
+    total:{
+        $arrayElemAt:["metadata.total",0]
+    }
+}
+
+3.projet:{
+    metadata:0   {this will not show in the data}
+}
+
+-----------------------------------------------
