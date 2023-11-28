@@ -1,13 +1,17 @@
-import { useState } from 'react'
-
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Navbar } from "./layouts/navbar";
+import { Home } from "./pages/Home";
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      Hello mitra
-    </>
-  )
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Navbar />} />
+          <Route index element={<Home />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
+  );
 }
 
-export default App
+export default App;
