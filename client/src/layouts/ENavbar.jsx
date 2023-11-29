@@ -1,13 +1,26 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from "react-router-dom";
 
 const ENavbar = () => {
   return (
     <nav className="bg-gray-800 text-white p-4">
       <div className="container mx-auto flex justify-between items-center">
-        <Link to='/' className="text-lg font-semibold">Home</Link>
-        <Link to='/products' className="text-lg">Products</Link>
-        <Link to='/about' className="text-lg">About</Link>
-        <Link to='/cart' className="text-lg">Cart</Link>
+        <Link to="/" className="text-lg font-semibold">
+          Home
+        </Link>
+        <NavLink
+          to="/products"
+          className={({ isActive }) => {
+            ` ${isActive ? "text-orange-700" : "text-gray-700"}`;
+          }}
+        >
+          Products
+        </NavLink>
+        <Link to="/about" className="text-lg">
+          About
+        </Link>
+        <Link to="/cart" className="text-lg">
+          Cart
+        </Link>
       </div>
     </nav>
   );
