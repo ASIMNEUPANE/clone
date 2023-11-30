@@ -37,7 +37,6 @@ const regenerate = async (email) => {
   const auth = await model.findOne({ email });
   if (!auth) throw new Error("User not found");
   const newToken = await generateOTP();
-  console.log(newToken);
   await model.findOneAndUpdate({ email }, { token: newToken }, { new: true });
   await model.deleteOne({ email });
   
@@ -46,7 +45,6 @@ const regenerate = async (email) => {
 };
 
 const login = async (email, password) => {
-  console.log(email, password);
   const user = await userModel.findOne({ email }).select("+password");
   if (!user) throw new Error("User not found");
   if (!user.isEmailVerified) throw new Error("email is not verified");

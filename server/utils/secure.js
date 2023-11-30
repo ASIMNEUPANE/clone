@@ -2,9 +2,10 @@ const { verifyJWT } = require("./jwt");
 const userModel = require("../modules/users/model");
 
 const compareRoles = (requiredRoles, userRoles) => {
-  if (requiredRoles < 1) return true;
-  return userRoles.some((v) => requiredRoles.indexOf(v) !== -1);
+  if (requiredRoles.length < 1) return true;
+  return requiredRoles.every(role => userRoles.includes(role));
 };
+
 
 const secureAPI = (roles) => {
   try {
