@@ -16,7 +16,7 @@ export default function Products() {
     initFetch();
   }, [initFetch]);
   return (
-    <div className="flex flex-wrap">
+    <div className=" mt-4 grid sm:grid-cols-2  lg:grid-cols-3 gap-10 ">
       {products && products.length > 0 ? (
         products.map((product, index) => (
           <div
@@ -24,7 +24,7 @@ export default function Products() {
             key={product?._id || index}
           >
             <img
-              className="w-full"
+              className=" hover:scale-110 transition duration-500 cursor-pointer w-full lg:h-60 md:h-40 sm:h-24 sm:w-13 object-cover"
               src={
                 product?.images[0] && product?.images[0].includes("http:")
                   ? product?.images[0]
