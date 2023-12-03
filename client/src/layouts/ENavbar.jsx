@@ -2,8 +2,8 @@ import { Link, NavLink } from "react-router-dom";
 
 const ENavbar = () => {
   return (
-    <nav className="bg-gray-800 text-white p-4">
-      <div className="container mx-auto flex justify-between items-center">
+    <nav className=" bg-orange-500 text-white p-4 rounded-sm gap-2">
+      <div className="container mx-auto flex gap-40 items-center">
         <Link to="/" className="text-lg font-semibold">
           Home
         </Link>
