@@ -2,10 +2,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect } from "react";
 import { fetchProducts } from "../slices/productsSlice";
 import { SERVER_URL } from "../constants";
-
+import { BsCart2 } from "react-icons/bs";
+import { FaRegEye } from "react-icons/fa";
+import { addToCart } from "../slices/cartSlice";
 export default function Products() {
   const { products, loading } = useSelector((state) => state.products);
-
   const dispatch = useDispatch();
 
   const initFetch = useCallback(async () => {
@@ -41,8 +42,13 @@ export default function Products() {
                 {product?.category_name}
               </span>
               <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-                {product.price}
+                {product?.price}
               </span>
+              <button>
+                <BsCart2 onClick={() => dispatch(addToCart(product))} />
+              </button>
+
+              <FaRegEye />
             </div>
           </div>
         ))
