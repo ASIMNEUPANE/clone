@@ -24,14 +24,15 @@ const cartSlice = createSlice({
       }
     },
     increaseQuantity: (state, action) => {
+     
       const itemsInCart = state.cart.find(
-        (item) => item._id === action.payload._id
+        (item) => item._id === action.payload.id
       );
-      const products = action.payload.products.find(
+      const product = action.payload.products.find(
         (item) => item._id === itemsInCart._id
       );
       if (itemsInCart) {
-        if (itemsInCart.quantity < products?.quantity) {
+        if (itemsInCart.quantity < product?.quantity) {
           itemsInCart.quantity++;
           state.quantity++;
         }
@@ -39,7 +40,7 @@ const cartSlice = createSlice({
     },
     decreaseQuantity: (state, action) => {
       const itemsInCart = state.cart.find(
-        (item) => item?._id === action.payload._id
+        (item) => item?._id === action.payload
         
       );
 
