@@ -1,7 +1,9 @@
-import React from "react";
 import { SERVER_URL } from "../constants";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useCallback, useEffect } from "react";
+import { fetchProducts } from "../slices/productsSlice";
+
 import {
   increaseQuantity,
   decreaseQuantity,
@@ -10,6 +12,7 @@ import {
 const Cart = () => {
   const { cart } = useSelector((state) => state.cart);
   const { products } = useSelector((state) => state.products);
+
   const dispatch = useDispatch();
 
   const getTotal = () => {
@@ -19,21 +22,30 @@ const Cart = () => {
     );
   };
   const handleDecrement = (id) => {
-    dispatch(decreaseQuantity(id));
+    if (id) dispatch(decreaseQuantity(id));
   };
   const handleIncrement = (id) => {
-    dispatch(increaseQuantity(id));
+    if (id) dispatch(increaseQuantity(id));
   };
+
+  const initFetch = useCallback(async () => {
+    dispatch(fetchProducts());
+  }, [fetchProducts]);
+
+  useEffect(() => {
+      initFetch();
+    },
+    [initFetch]);
 
   return (
     <>
       {cart.length > 0 ? (
         <FilledCart
+          products={products}
           items={cart}
           getTotal={getTotal}
           handleDecrement={handleDecrement}
           handleIncrement={handleIncrement}
-          products={products}
         />
       ) : (
         <EmptyCart />
@@ -42,7 +54,13 @@ const Cart = () => {
   );
 };
 
-const FilledCart = ({ items, getTotal,handleDecrement,handleIncrement,products }) => {
+const FilledCart = ({
+  items,
+  getTotal,
+  handleDecrement,
+  handleIncrement,
+  products,
+}) => {
   return (
     <div className="max-w-3xl mx-auto my-8 p-4 bg-white rounded-lg shadow-md">
       <h1 className="text-3xl font-bold mb-4">Your Cart</h1>
@@ -77,12 +95,18 @@ const FilledCart = ({ items, getTotal,handleDecrement,handleIncrement,products }
 
                 <td className="py-2 px-4">
                   {" "}
-                  <button onClick={() =>{ handleDecrement(item?._id)}}>
+                  <button
+                    onClick={() => {
+                      handleDecrement(item?._id);
+                    }}
+                  >
                     -
                   </button>{" "}
                   {item?.quantity}{" "}
                   <button
-                    onClick={() => {handleIncrement({ id: item?._id, products })}}
+                    onClick={() => {
+                      handleIncrement({ id: item?._id, products });
+                    }}
                   >
                     +
                   </button>{" "}
