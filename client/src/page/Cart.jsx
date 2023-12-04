@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect } from "react";
 import { fetchProducts } from "../slices/productsSlice";
+import { RxCross1 } from "react-icons/rx";
 
 import {
   increaseQuantity,
@@ -27,15 +28,17 @@ const Cart = () => {
   const handleIncrement = (id) => {
     if (id) dispatch(increaseQuantity(id));
   };
+  const handleRemove = (id) => {
+    if (id) dispatch(removeItems(id));
+  };
 
   const initFetch = useCallback(async () => {
     dispatch(fetchProducts());
   }, [fetchProducts]);
 
   useEffect(() => {
-      initFetch();
-    },
-    [initFetch]);
+    initFetch();
+  }, [initFetch]);
 
   return (
     <>
@@ -46,6 +49,8 @@ const Cart = () => {
           getTotal={getTotal}
           handleDecrement={handleDecrement}
           handleIncrement={handleIncrement}
+          handleRemove={handleRemove}
+          RxCross1={RxCross1}
         />
       ) : (
         <EmptyCart />
@@ -60,6 +65,8 @@ const FilledCart = ({
   handleDecrement,
   handleIncrement,
   products,
+  handleRemove,
+  RxCross1
 }) => {
   return (
     <div className="max-w-3xl mx-auto my-8 p-4 bg-white rounded-lg shadow-md">
@@ -95,7 +102,7 @@ const FilledCart = ({
 
                 <td className="py-2 px-4">
                   {" "}
-                  <button
+                  <button className="px-1"
                     onClick={() => {
                       handleDecrement(item?._id);
                     }}
@@ -103,13 +110,20 @@ const FilledCart = ({
                     -
                   </button>{" "}
                   {item?.quantity}{" "}
-                  <button
+                  <button className="px-1"
                     onClick={() => {
                       handleIncrement({ id: item?._id, products });
                     }}
                   >
                     +
                   </button>{" "}
+                  <button className="px-4"
+                    onClick={() => {
+                      handleRemove(item?._id);
+                    }}
+                  >
+                  <RxCross1/>
+                  </button>
                 </td>
                 <td className="py-2 px-4">{item?.quantity * item?.price} </td>
               </tr>
