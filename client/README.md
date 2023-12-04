@@ -16,3 +16,8 @@ services for the products or whatever, connect api with url and create a req lik
 create a slice 
 create a store
 merge store with the main.jsx
+
+increament;
+
+find item in car
+if itemincart itemincart.state.cart = sta

@@ -2,9 +2,14 @@ import React from "react";
 import { SERVER_URL } from "../constants";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
+import {
+  increaseQuantity,
+  decreaseQuantity,
+  removeItems,
+} from "../slices/cartSlice";
 const Cart = () => {
   const { cart } = useSelector((state) => state.cart);
+  const { products } = useSelector((state) => state.products);
   const dispatch = useDispatch();
 
   const getTotal = () => {
@@ -13,11 +18,23 @@ const Cart = () => {
       0
     );
   };
+  const handleDecrement = (id) => {
+    dispatch(decreaseQuantity(id));
+  };
+  const handleIncrement = (id) => {
+    dispatch(increaseQuantity(id));
+  };
 
   return (
     <>
       {cart.length > 0 ? (
-        <FilledCart items={cart} getTotal={getTotal} />
+        <FilledCart
+          items={cart}
+          getTotal={getTotal}
+          handleDecrement={handleDecrement}
+          handleIncrement={handleIncrement}
+          products={products}
+        />
       ) : (
         <EmptyCart />
       )}
@@ -25,7 +42,7 @@ const Cart = () => {
   );
 };
 
-const FilledCart = ({ items, getTotal }) => {
+const FilledCart = ({ items, getTotal,handleDecrement,handleIncrement,products }) => {
   return (
     <div className="max-w-3xl mx-auto my-8 p-4 bg-white rounded-lg shadow-md">
       <h1 className="text-3xl font-bold mb-4">Your Cart</h1>
@@ -43,7 +60,10 @@ const FilledCart = ({ items, getTotal }) => {
         <tbody>
           {items.length > 0 &&
             items.map((item) => (
-              <tr key={item?._id} className="grid grid-cols-5 text-left border-b">
+              <tr
+                key={item?._id}
+                className="grid grid-cols-5 text-left border-b"
+              >
                 <td className="py-2 px-4">{item?.name}</td>
                 <td className="py-2 px-4">
                   <img
@@ -54,8 +74,20 @@ const FilledCart = ({ items, getTotal }) => {
                   />
                 </td>
                 <td className="py-2 px-4">{item?.price}</td>
-                <td className="py-2 px-4">{item?.quantity}</td>
-                <td className="py-2 px-4">{item?.quantity * item?.price}</td>
+
+                <td className="py-2 px-4">
+                  {" "}
+                  <button onClick={() =>{ handleDecrement(item?._id)}}>
+                    -
+                  </button>{" "}
+                  {item?.quantity}{" "}
+                  <button
+                    onClick={() => {handleIncrement({ id: item?._id, products })}}
+                  >
+                    +
+                  </button>{" "}
+                </td>
+                <td className="py-2 px-4">{item?.quantity * item?.price} </td>
               </tr>
             ))}
           <tr className="grid grid-cols-5 text-left">
