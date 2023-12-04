@@ -4,7 +4,6 @@ const initialState = {
   cart: [],
   quantity: 0,
 };
-console.log(initialState,"HEllo")
 
 const cartSlice = createSlice({
   name: "cart",
@@ -29,4 +28,4 @@ const cartSlice = createSlice({
 });
 
 export const { addToCart } = cartSlice.actions;
-export const carReducer = cartSlice.reducer;
+export const cartReducer = cartSlice.reducer;
