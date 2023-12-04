@@ -10,22 +10,57 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      const itemsInCart = state.cart.find((item) => 
-        item._id === action.payload._id
+      const itemsInCart = state.cart.find(
+        (item) => item._id === action.payload._id
       );
       if (itemsInCart) {
         if (itemsInCart.quantity < action.payload.quantity) {
-          itemsInCart.quantity++
-          state.quantity++
-        }} else {
-          state.cart.push({ ...action.payload, quantity: 1 });
+          itemsInCart.quantity++;
           state.quantity++;
-        
+        }
+      } else {
+        state.cart.push({ ...action.payload, quantity: 1 });
+        state.quantity++;
       }
     },
-    updatetoCart:(state,action)=>{
-
-    }
+    increaseQuantity: (state, action) => {
+      const itemsInCart = state.cart.find(
+        (item) => item._id === action.payload._id
+      );
+      const products = action.payload.products.find(
+        (item) => item._id === itemsInCart._id
+      );
+      if (itemsInCart) {
+        if (itemsInCart.quantity < products?.quantity) {
+          itemsInCart.quantity++;
+          state.quantity++;
+        }
+      }
+    },
+    decreaseQuantity: (state, action) => {
+      const itemsInCart = state.cart.find(
+        (item) => item?._id === action.payload._id
+      );
+      if (itemsInCart.quantity === 1) {
+        itemsInCart.quantity = 1;
+      } else {
+        itemsInCart.quantity--;
+        state.quantity--;
+      }
+    },
+    removeAll: (state) => {
+      state.cart = [];
+      state.quantity = 0;
+    },
+    removeItems: (state, action) => {
+      const removeItem = state.cart.filter(
+         (item) => item._id !== action.payload
+      );
+      state.cart= removeItem;
+      state.quantity = state.cart.reduce((acc,obj)=>{
+        return acc + obj.quantity;
+      },0);
+    },
   },
 });
 
