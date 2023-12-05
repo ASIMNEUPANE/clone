@@ -44,8 +44,8 @@ export default function Products() {
               <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
                 {product?.price}
               </span>
-              <button>
-                <BsCart2 onClick={() => dispatch(addToCart(product))} />
+              <button disabled={product.quantity < 1 ?  true:false} >
+                <BsCart2  onClick={() => dispatch(addToCart(product))} />
               </button>
 
               <FaRegEye />
