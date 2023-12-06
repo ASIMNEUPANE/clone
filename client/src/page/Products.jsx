@@ -5,6 +5,7 @@ import { SERVER_URL } from "../constants";
 import { BsCart2 } from "react-icons/bs";
 import { FaRegEye } from "react-icons/fa";
 import { addToCart } from "../slices/cartSlice";
+import { Link } from "react-router-dom";
 export default function Products() {
   const { products, loading } = useSelector((state) => state.products);
   const dispatch = useDispatch();
@@ -44,11 +45,12 @@ export default function Products() {
               <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
                 {product?.price}
               </span>
-              <button disabled={product.quantity < 1 ?  true:false} >
-                <BsCart2  onClick={() => dispatch(addToCart(product))} />
+              <button disabled={product?.quantity < 1 ? true : false}>
+                <BsCart2 onClick={() => dispatch(addToCart(product))} />
               </button>
-
-              <FaRegEye />
+              <Link to={`/products/${product?._id}`}>
+                <FaRegEye />
+              </Link>
             </div>
           </div>
         ))
