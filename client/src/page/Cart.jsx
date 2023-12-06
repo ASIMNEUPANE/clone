@@ -133,6 +133,8 @@ const FilledCart = ({
             <td className="py-2 px-4 font-bold">{getTotal()}</td>
           </tr>
         </tbody>
+        <td className="py-2 px-4 font-bold right-11"><Link to='/checkout'>Checkout</Link></td>
+
       </table>
     </div>
   );
