@@ -6,7 +6,7 @@ const create = async (payload) => {
 
 const list = async ({limit, page, search}) => {
   page = parseInt(page) || 1;
-  limit = parseInt(limit) || 5;
+  limit = parseInt(limit) || 6;
   const { isArchived } = search;
 
   const response = await model.aggregate([

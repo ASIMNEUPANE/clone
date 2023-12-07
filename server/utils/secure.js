@@ -8,8 +8,9 @@ const compareRoles = (requiredRoles, userRoles) => {
 
 
 const secureAPI = (roles) => {
-  try {
+ 
     return async (req, res, next) => {
+      try {
       const token = req?.headers?.authorization;
       if (!token) throw new Error("Token required");
       const accessToken = token.split("Bearer ")[1];
@@ -21,9 +22,9 @@ const secureAPI = (roles) => {
       const validRoles = compareRoles(roles ?? [], user?.roles);
       if (!validRoles) throw new Error("user unathorized");
       next();
-    };
+    ;
   } catch (e) {
     next(e);
-  }
+  }}
 };
-module.exports = secureAPI
+module.exports = secureAPI;
