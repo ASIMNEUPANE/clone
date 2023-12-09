@@ -13,7 +13,6 @@ export const loginByEmail = createAsyncThunk(
   "auth/loginByEmail",
 
   async ({ email, password }) => {
-    console.log(email,password,'jhhh')
     try {
       const resp = await login({ email, password });
       return resp.data;
