@@ -6,7 +6,7 @@ export default function checkout() {
   const getTotal = () => {
     return cart.reduce((acc, obj) => acc + obj.price * obj.quantity, 0);
   };
-
+ 
   const [checkout, setCheckout] = useState({
     name: "",
     email: "",
