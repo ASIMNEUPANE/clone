@@ -59,7 +59,7 @@ const login = async (email, password) => {
   };
   const token = await generateJWT(payload);
   return {
-    // user: { name: user.name, role: user.roles, email: user.email },
+    user: { name: user.name, role: user.roles, email: user.email },
     token,
   };
 };
