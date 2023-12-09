@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { login } from "../services/auth";
+import { setToken } from "../utils/session";
 
 const initialState = {
   user: {},
@@ -37,12 +38,14 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(loginByEmail.fulfilled, (state, action) => {
+      
       state.loading = false;
       state.isLoggedIn = true;
       state.user = action.payload.data.user;
-      state.roles.push(...action.payload.data.user.roles);
+      setToken(action.payload.data.token)
+      state.roles.push(...action.payload.data.user.role);
     });
-    builder.addCase(loginByEmail.pending, (state, action) => {
+    builder.addCase(loginByEmail.pending, (state) => {
       state.loading = false;
     });
     builder.addCase(loginByEmail.rejected, (state, action) => {
