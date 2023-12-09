@@ -3,33 +3,30 @@ import { useDispatch } from "react-redux";
 import { loginByEmail } from "../slices/authSlice";
 import { useNavigate } from "react-router";
 export default function Login() {
-  const [ login, setLogin ] = useState({
+  const [login, setLogin] = useState({
     email: "",
     password: "",
   });
-  const [error, setError]= useState('')
-  console.log(login)
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const [error, setError] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleLogin =async(e)=>{
-
-   
+  const handleLogin = async (e) => {
     e.preventDefault();
-    try{
-const data = await dispatch(loginByEmail({email:login.email, password:login.password}));
-if(data.paylaod.msg==='success'){
-  navigate('/admin/dashboard')
-}else{
-  setError(data.payload.msg.split('Error*'))
-  
-}
-
-    }catch(e){
+    try {
+      const data = await dispatch(
+        loginByEmail({ email: login.email, password: login.password })
+      );
+      if (data.paylaod.msg === "success") {
+        navigate("/admin/dashboard");
+      } else {
+        setError(data.payload.msg.split("Error*"));
+      }
+    } catch (e) {
       return e;
     }
-  }
- 
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="max-w-md w-full p-6 bg-white rounded-md shadow-md">
@@ -76,7 +73,7 @@ if(data.paylaod.msg==='success'){
           <button
             type="button"
             className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 w-full"
-            onClick={(e)=>{
+            onClick={(e) => {
               handleLogin(e);
             }}
           >
