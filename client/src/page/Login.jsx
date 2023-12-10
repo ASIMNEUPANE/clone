@@ -17,7 +17,7 @@ export default function Login() {
       const data = await dispatch(
         loginByEmail({ email: login.email, password: login.password })
       );
-      if (data.paylaod.msg === "success") {
+      if (data?.paylaod?.msg === "success") {
         navigate("/admin/dashboard");
       } else {
         setError(data.payload.msg.split("Error*"));
