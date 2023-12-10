@@ -18,7 +18,7 @@ import ProductsDetails from "./page/ProductsDetails.jsx";
 import Login from "./page/Login.jsx";
 import AdminLayout from "./Layouts/AdminLayout.jsx";
 import Dashboard from "./page/admin/Dashboard.jsx";
-import { AdminRoute } from "./components/Routes.jsx";
+import { AdminRoute, PrivateRoute } from "./components/Routes.jsx";
 
 const router = createBrowserRouter([
   {
@@ -31,15 +31,22 @@ const router = createBrowserRouter([
       { path: "products", element: <Products /> },
       { path: `products/:id`, element: <ProductsDetails /> },
       { path: "checkout", element: <Checkout /> },
-      { path: "login", element: <Login /> },
+      {
+        path: "login",
+        element: (
+          <PrivateRoute>
+            <Login />
+          </PrivateRoute>
+        ),
+      },
     ],
   },
   {
-    path: "admin",
+    path: "/admin",
     element: <AdminLayout />,
     children: [
       {
-        path: "admin/dashboard",
+        path: "/admin/dashboard",
         element: (
           <AdminRoute role="admin">
             <Dashboard />
