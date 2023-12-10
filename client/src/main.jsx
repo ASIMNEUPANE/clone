@@ -16,6 +16,9 @@ import Cart from "../src/page/Cart.jsx";
 import Checkout from "./page/Checkout.jsx";
 import ProductsDetails from "./page/ProductsDetails.jsx";
 import Login from "./page/Login.jsx";
+import AdminLayout from "./Layouts/AdminLayout.jsx";
+import Dashboard from "./page/admin/Dashboard.jsx";
+import { AdminRoute } from "./components/Routes.jsx";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +32,20 @@ const router = createBrowserRouter([
       { path: `products/:id`, element: <ProductsDetails /> },
       { path: "checkout", element: <Checkout /> },
       { path: "login", element: <Login /> },
+    ],
+  },
+  {
+    path: "admin",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "admin/dashboard",
+        element: (
+          <AdminRoute role="admin">
+            <Dashboard />
+          </AdminRoute>
+        ),
+      },
     ],
   },
 ]);
