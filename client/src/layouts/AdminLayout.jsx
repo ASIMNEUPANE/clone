@@ -1,6 +1,7 @@
 import React from "react";
 import AdminNavbar from "./AdminNavbar";
 import Footer from "./Footer";
+import { Outlet } from "react-router";
 export default function () {
   return (
     <div>
