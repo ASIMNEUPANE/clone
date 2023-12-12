@@ -8,3 +8,4 @@ export const list = async()=>{
 export const getProduct = async(id)=>{
     return API.get(`${URLS.PRODUCTS}/${id}`)
 }
+
