@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginByEmail } from "../slices/authSlice";
-import { useNavigate } from "react-router";
+import { redirect } from "react-router-dom";
 export default function Login() {
   const [login, setLogin] = useState({
     email: "",
@@ -9,7 +9,7 @@ export default function Login() {
   });
   const [error, setError] = useState("");
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -17,14 +17,18 @@ export default function Login() {
       const data = await dispatch(
         loginByEmail({ email: login.email, password: login.password })
       );
-      if (data?.paylaod?.msg === "success") {
-        navigate("/admin/dashboard");
+      console.log(data.payload.msg)
+      if (data.payload.msg === "success") {
+        return redirect("/admin/dashboard");
       } else {
-        setError(data.payload.msg.split("Error*"));
+        setError(data.payload.msg.split("Error:"));
       }
     } catch (e) {
       return e;
-    }
+    } finally {
+      setTimeout(() => {
+        setError("");
+      }, 2000);}
   };
 
   return (
@@ -50,6 +54,7 @@ export default function Login() {
                 });
               }}
             />
+            {error}
           </div>
           <div>
             <label
