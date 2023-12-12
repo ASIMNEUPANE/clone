@@ -84,8 +84,8 @@ router.put(
 );
 router.delete("/:id", secureAPI(["admin"]), async (req, res, next) => {
   try {
-    req.body.updated_by = req.currentUser;
-    const result = controller.deleteById(req.params.id, req.body);
+    // req.body.updated_by = req.currentUser;
+    const result = await controller.deleteById(req.params.id, req.body);
     res.json({ data: result, msg: "success" });
   } catch (e) {
     next(e);
