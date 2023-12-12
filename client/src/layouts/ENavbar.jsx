@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-
+import { CiLogin } from "react-icons/ci";
 const ENavbar = () => {
   return (
     <nav className=" bg-orange-500 text-white p-4 rounded-sm gap-2">
@@ -21,6 +21,10 @@ const ENavbar = () => {
         <Link to="/cart" className="text-lg">
           Cart
         </Link>
+        <Link to="/login" className="text-lg">
+          <CiLogin/>
+        </Link>
+        
       </div>
     </nav>
   );
