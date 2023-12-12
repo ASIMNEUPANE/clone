@@ -20,19 +20,21 @@ import AdminLayout from "./Layouts/AdminLayout.jsx";
 import Dashboard from "./page/admin/Dashboard.jsx";
 import { AdminRoute, PrivateRoute } from "./components/Routes.jsx";
 
+import {AddProducts,ListProducts,EditProducts} from './page/admin/products/index.jsx'
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
     children: [
       { path: "", element: <Home /> },
-      { path: "about", element: <About /> },
-      { path: "cart", element: <Cart /> },
-      { path: "products", element: <Products /> },
-      { path: `products/:id`, element: <ProductsDetails /> },
-      { path: "checkout", element: <Checkout /> },
+      { path: "/about", element: <About /> },
+      { path: "/cart", element: <Cart /> },
+      { path: "/products", element: <Products /> },
+      { path: `/products/:id`, element: <ProductsDetails /> },
+      { path: "/checkout", element: <Checkout /> },
       {
-        path: "login",
+        path: "/login",
         element: (
           <PrivateRoute>
             <Login />
@@ -50,6 +52,30 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute role="admin">
             <Dashboard />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/admin/products",
+        element: (
+          <AdminRoute role="admin">
+            <ListProducts />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/admin/products/add",
+        element: (
+          <AdminRoute role="admin">
+            <AddProducts />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/admin/products/:id",
+        element: (
+          <AdminRoute role="admin">
+            <EditProducts />
           </AdminRoute>
         ),
       },
