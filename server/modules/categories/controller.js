@@ -10,7 +10,7 @@ const create = async (payload) => {
   return await model.create(payload);
 };
 
-const list = async ({limit, page, search}) => {
+const list = async (limit, page, search) => {
 
   page = parseInt(page) || 1;
   limit = parseInt(limit) || 3;
