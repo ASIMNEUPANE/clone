@@ -25,7 +25,7 @@ const AdminNavbar = () => {
         <Link to="/admin/dashboard" className="text-lg">
           Users
         </Link>
-        <Link to="/admin/dashboard" className="text-lg">
+        <Link to="/admin/categories" className="text-lg">
           Categories
         </Link>
         <button onClick={handleLockOut}>
