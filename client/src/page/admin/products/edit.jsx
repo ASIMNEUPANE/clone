@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
 import useCategory from "../../../hooks/useCategory";
-import { create } from "../../../services/products";
 import { useNavigate, useParams } from "react-router-dom";
 import useAPI from "../../../hooks/useAPI";
 import { SERVER_URL, URLS } from "../../../constants";
