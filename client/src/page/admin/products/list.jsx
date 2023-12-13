@@ -1,13 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { URLS } from "../../../constants";
 import { fetchProducts } from "../../../slices/productsSlice";
 import { useEffect, useCallback } from "react";
 import useAPI from "../../../hooks/useAPI";
 export default function list() {
-
   const { products } = useSelector((state) => state.products);
   const dispatch = useDispatch();
-  const {deleteById} = useAPI()
+  const { deleteById } = useAPI();
 
   const handledelete = async (id) => {
     await deleteById(URLS.PRODUCTS, id);
@@ -26,6 +26,7 @@ export default function list() {
 
   return (
     <div className="overflow-x-auto">
+      {<Link to={'/admin/products/add'}>Add Products</Link>}
       <table className="min-w-full bg-white border border-gray-300">
         <thead>
           <tr>
@@ -43,16 +44,12 @@ export default function list() {
                   <td className="py-2 px-4 border-b">{product.name}</td>
                   <td className="py-2 px-4 border-b">${product.price}</td>
                   <td className="py-2 px-4 border-b">
-                    {" "}
                     <button onClick={() => handledelete(product?._id)}>
                       delete
                     </button>
                   </td>
-                  <td
-                    className="py-2 px-4 border-b"
-                    onClick={handleEdit({ id: product?._id })}
-                  >
-                    edit
+                  <td className={`py-2 px-4 border-b `}>
+                    <Link to={`/admin/products/${product?._id}`}>edit</Link>
                   </td>
                 </tr>
               ))
