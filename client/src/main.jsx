@@ -21,6 +21,7 @@ import Dashboard from "./page/admin/Dashboard.jsx";
 import { AdminRoute, PrivateRoute } from "./components/Routes.jsx";
 
 import {AddProducts,ListProducts,EditProducts} from './page/admin/products/index.jsx'
+import { AddCategories, EditCategories, ListCategories } from "./page/admin/categories/index.jsx";
 
 const router = createBrowserRouter([
   {
@@ -76,6 +77,30 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute role="admin">
             <EditProducts />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/admin/categories",
+        element: (
+          <AdminRoute role="admin">
+            <ListCategories />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/admin/categories/add",
+        element: (
+          <AdminRoute role="admin">
+            <AddCategories />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/admin/categories/:id",
+        element: (
+          <AdminRoute role="admin">
+            <EditCategories />
           </AdminRoute>
         ),
       },
