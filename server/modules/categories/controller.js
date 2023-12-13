@@ -1,5 +1,6 @@
 const slugify = require("slugify");
 const model = require("./model");
+const productModel = require('../products/model')
 
 const slugGenerator = async (payload) => {
   return await slugify(payload, { lower: true, strict: false });
@@ -67,6 +68,14 @@ const updateById=async(id,payload)=>{
   await model.findOneAndUpdate({_id:id}, payload, {new:true})
 }
 
+const deleteById= async(id)=>{
+  const isUsed = await productModel.findOne({category:id})
+  if(isUsed){
+    throw new Error (`Cetegory is in use . Please remove from the product name of ${isUsed.name}`)
+  }
+  return model.deleteOne({_id:id})
+}
 
 
-module.exports = { create, list,getById,updateById };
+
+module.exports = { create, list,getById,updateById,deleteById };

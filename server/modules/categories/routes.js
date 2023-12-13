@@ -30,6 +30,14 @@ router.get("/:id", secureAPI(['admin']), async (req, res, next) => {
     next(e);
   }
 });
+router.delete("/:id", secureAPI(['admin']), async (req, res, next) => {
+  try {
+    const result = await controller.deleteById(req.params.id);
+    res.json({ data: result, msg: "success" });
+  } catch (e) {
+    next(e);
+  }
+});
 router.put("/:id", secureAPI(['admin']), async (req, res, next) => {
   try {
     const result = await controller.updateById(req.params.id,req.body);
