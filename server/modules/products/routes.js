@@ -5,7 +5,7 @@ const secureAPI = require("../../utils/secure");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "Public/products");
+    cb(null, "./Public/products");
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + "." + file.originalname;
@@ -74,7 +74,7 @@ router.put(
         });
       }
       req.body.updated_by = req.currentUser;
-      console.log(req.body)
+      console.log(req.body);
       const result = await controller.updateById(req.params.id, req.body);
       res.json({ data: result, msg: "success" });
     } catch (e) {

@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
 import useCategory from "../../../hooks/useCategory";
-
+import { create } from "../../../services/products";
+import { useNavigate } from "react-router-dom";
 export default function add() {
+  const navigate = useNavigate();
   const { list } = useCategory();
   const [categories, setCategories] = useState([]);
+  const [msg, setMsg] = useState("");
+
   const [payload, setPayload] = useState({
     name: "",
     description: "",
@@ -32,12 +36,56 @@ export default function add() {
     setCategories(data.data);
   }, []);
 
+  const finalSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const formData = new FormData();
+
+      files.forEach((file) => {
+        formData.append("images", file);
+      });
+
+      formData.append("name", payload?.name);
+      formData.append("description", payload?.description);
+      formData.append("quantity", payload?.quantity);
+      formData.append("price", payload?.price);
+      formData.append("alias", payload?.alias);
+      formData.append("brand", payload?.brand);
+      formData.append("category", payload?.category);
+
+      const { data } = await create(formData);
+
+      if (data.msg === "success") {
+        setMsg(
+          `${payload.name} has been created successfully. redirect in 3 second`
+        );
+        setTimeout(() => {
+          navigate("/admin/products");
+        }, 3000);
+      }
+    } catch (e) {
+      throw new Error("something went wrong");
+    } finally {
+      setTimeout(() => {
+        setPayload({
+          name: "",
+          description: "",
+          quantity: "",
+          price: "",
+          alias: "",
+          brand: "",
+          category: "",
+        });
+      }, 2500);
+    }
+  };
+
   useEffect(() => {
     getAllCategories();
   }, [getAllCategories]);
-
+  console.log(payload.name);
   return (
-    <div className="container mx-auto my-8">
+    <div className="container mx-auto my-8" onSubmit={(e) => finalSubmit(e)}>
       <h1 className="text-3xl font-bold mb-4">Add Product</h1>
       <form className="max-w-md mx-auto">
         <div className="mb-4">
@@ -65,9 +113,7 @@ export default function add() {
                   src={URL.createObjectURL(file)}
                   alt={`Preview-${index + 1}`}
                   className="w-20 h-10 object-cover"
-                  style={{ objectFit: 'contain' }}
-
-
+                  style={{ objectFit: "contain" }}
                 />
               ))}
             </div>
@@ -87,6 +133,12 @@ export default function add() {
             name="productName"
             className="mt-1 p-2 border w-full"
             placeholder="Enter product name"
+            value={payload?.name}
+            onChange={(e) => {
+              setPayload((prev) => {
+                return { ...prev, name: e.target.value };
+              });
+            }}
           />
         </div>
         <div className="mb-4">
@@ -100,6 +152,12 @@ export default function add() {
             rows="3"
             className="mt-1 p-2 border w-full"
             placeholder="Enter product description"
+            value={payload?.description}
+            onChange={(e) => {
+              setPayload((prev) => {
+                return { ...prev, description: e.target.value };
+              });
+            }}
           ></textarea>
         </div>
         <div className="mb-4">
@@ -113,6 +171,12 @@ export default function add() {
             type="text"
             className="mt-1 p-2 border w-full"
             placeholder="Enter product price"
+            value={payload?.alias}
+            onChange={(e) => {
+              setPayload((prev) => {
+                return { ...prev, alias: e.target.value };
+              });
+            }}
           />
         </div>
         <div className="mb-4">
@@ -128,6 +192,12 @@ export default function add() {
             name="productPrice"
             className="mt-1 p-2 border w-full"
             placeholder="Enter product price"
+            value={payload?.price}
+            onChange={(e) => {
+              setPayload((prev) => {
+                return { ...prev, price: e.target.value };
+              });
+            }}
           />
         </div>
         <div className="mb-4">
@@ -143,6 +213,12 @@ export default function add() {
             name="productPrice"
             className="mt-1 p-2 border w-full"
             placeholder="Enter product price"
+            value={payload?.quantity}
+            onChange={(e) => {
+              setPayload((prev) => {
+                return { ...prev, quantity: e.target.value };
+              });
+            }}
           />
         </div>
         <div className="mb-4">
@@ -158,6 +234,12 @@ export default function add() {
             name="productPrice"
             className="mt-1 p-2 border w-full"
             placeholder="Enter product price"
+            value={payload?.brand}
+            onChange={(e) => {
+              setPayload((prev) => {
+                return { ...prev, brand: e.target.value };
+              });
+            }}
           />
         </div>
         <div className="mb-4">
@@ -169,7 +251,14 @@ export default function add() {
           </label>
           <label for="cars">Choose a car:</label>
 
-          <select id="cat">
+          <select
+            value={payload?.category}
+            onChange={(e) => {
+              setPayload((prev) => {
+                return { ...prev, category: e.target.value };
+              });
+            }}
+          >
             <option value="">Select One</option>
 
             {categories.length > 0
