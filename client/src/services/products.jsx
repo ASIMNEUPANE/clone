@@ -13,6 +13,7 @@ export const create = async (payload) => {
   }
 };
 
+
 export const list = async () => {
   return API.get(`${URLS.PRODUCTS}`);
 };

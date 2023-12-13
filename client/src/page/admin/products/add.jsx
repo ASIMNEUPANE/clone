@@ -279,6 +279,7 @@ export default function add() {
         >
           Add Product
         </button>
+        {msg}
       </form>
     </div>
   );
