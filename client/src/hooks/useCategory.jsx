@@ -6,10 +6,22 @@ const useCategory = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const create = async (payload) => {
+    try {
+      setLoading(true);
+      const { data } = await API.post(URLS.CATEGORIES, payload);
+
+      return data.data;
+    } catch (e) {
+      setError(e);
+    } finally {
+      setLoading(false);
+    }
+  };
   const list = async () => {
     try {
       setLoading(true);
-      const { data } = await API.get(URLS.CATEGORIES);
+      const {data} = await API.get(URLS.CATEGORIES);
 
       return data.data;
     } catch (e) {
@@ -21,7 +33,7 @@ const useCategory = () => {
   const getById = async (id) => {
     try {
       setLoading(true);
-      const { data } = await API.get(URLS.CATEGORIES+'/'+id);
+      const { data } = await API.get(URLS.CATEGORIES + "/" + id);
 
       return data.data;
     } catch (e) {
@@ -30,10 +42,10 @@ const useCategory = () => {
       setLoading(false);
     }
   };
-  const updateById = async (id,payload) => {
+  const updateById = async (id, payload) => {
     try {
       setLoading(true);
-      const result = await API.get(URLS.CATEGORIES+'/'+id,payload);
+      const result = await API.get(URLS.CATEGORIES + "/" + id, payload);
 
       return result;
     } catch (e) {
@@ -46,9 +58,8 @@ const useCategory = () => {
     try {
       setLoading(true);
       const result = await API.delete(`${URLS.CATEGORIES}/${id}`);
-     
+
       return result;
-      
     } catch (e) {
       setError(e);
     } finally {
@@ -56,7 +67,7 @@ const useCategory = () => {
     }
   };
 
-  return { list,getById,deleteById,updateById };
+  return { list, getById, deleteById, updateById, create };
 };
 
 export default useCategory;
