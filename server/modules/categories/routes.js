@@ -24,7 +24,7 @@ router.get("/", secureAPI(['admin']), async (req, res, next) => {
 });
 router.get("/:id", secureAPI(['admin']), async (req, res, next) => {
   try {
-    const result = await controller.getById(req.params);
+    const result = await controller.getById(req.params.id);
     res.json({ data: result, msg: "success" });
   } catch (e) {
     next(e);
