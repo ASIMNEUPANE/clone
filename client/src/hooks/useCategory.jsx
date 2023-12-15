@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useCallback } from "react";
 import API from "../utils/API";
 import { URLS } from "../constants";
 
@@ -18,10 +18,10 @@ const useCategory = () => {
       setLoading(false);
     }
   };
-  const list = async () => {
+  const list =useCallback( async () => {
     try {
       setLoading(true);
-      const {data} = await API.get(URLS.CATEGORIES);
+      const { data } = await API.get(URLS.CATEGORIES);
 
       return data.data;
     } catch (e) {
@@ -29,11 +29,11 @@ const useCategory = () => {
     } finally {
       setLoading(false);
     }
-  };
+  },[]);
   const getById = async (id) => {
     try {
       setLoading(true);
-      const { data } = await API.get(URLS.CATEGORIES + "/" + id);
+      const { data } = await API.get(`${URLS.CATEGORIES}/${id}`);
 
       return data.data;
     } catch (e) {
@@ -45,8 +45,7 @@ const useCategory = () => {
   const updateById = async (id, payload) => {
     try {
       setLoading(true);
-      const result = await API.get(URLS.CATEGORIES + "/" + id, payload);
-
+      const result = await API.put(`${URLS.CATEGORIES}/${id}`, payload);
       return result;
     } catch (e) {
       setError(e);
@@ -61,7 +60,9 @@ const useCategory = () => {
 
       return result;
     } catch (e) {
-      setError(e);
+      const setErr = e.response ? e.response.data.msg : "Something went wrong";
+
+      setError(setErr);
     } finally {
       setLoading(false);
     }
