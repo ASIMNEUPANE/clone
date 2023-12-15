@@ -28,9 +28,10 @@ export default function list() {
   useEffect(() => {
     fetchCat();
   }, [fetchCat]);
-
+console.log(cats)
   return (
     <div className="overflow-x-auto">
+      <Link to={'/admin/categories/add'}>Add Category</Link>
       <table className="min-w-full bg-white border border-gray-300">
         <thead>
           <tr>
