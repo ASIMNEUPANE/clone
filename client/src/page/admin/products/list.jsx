@@ -12,9 +12,6 @@ export default function list() {
   const handledelete = async (id) => {
     await deleteById(URLS.PRODUCTS, id);
   };
-  const handleEdit = () => {
-    console.log("hello");
-  };
 
   const fetchInit = useCallback(async () => {
     return dispatch(fetchProducts());
