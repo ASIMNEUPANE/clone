@@ -2,7 +2,7 @@ const router = require("express").Router();
 const controller = require("./controller");
 const secureApi = require("../../utils/secure");
 
-router.post("/", secureApi(["admin"]), async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
     const result = await controller.create(req.body);
     res.json({ data: result, msg: "success" });
