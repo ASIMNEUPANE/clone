@@ -1,4 +1,4 @@
-import { createSlice, createAsynThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as ORDER_API from "../services/orders";
 
 const initialState = {
@@ -8,9 +8,11 @@ const initialState = {
   order: {},
 };
 
-export const create = createAsynThunk("/orders/create", async (payload) => {
+export const create = createAsyncThunk("/orders/create", async (payload) => {
   const res = await ORDER_API.create(payload);
+ 
   return res.data;
+
 });
 
 const orderSlice = createSlice({
