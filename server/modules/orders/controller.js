@@ -1,14 +1,13 @@
 const { v4: uuidv4 } = require("uuid");
 const model = require("./model");
 const productModel = require("../../modules/products/model");
-const { relativeTimeRounding } = require("moment");
 
 const create = async (payload) => {
   payload.id = uuidv4();
-  const products = payload.products;
+  const products = payload?.products;
 
   products.map(async (product) => {
-    const { products: id, quantity } = product;
+    const { product: id, quantity } = product;
     const productInfo = await productModel.findOne({ _id: id });
     if (!productInfo) throw new Error("product not found");
 
