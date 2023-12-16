@@ -17,6 +17,10 @@ export default function checkout() {
     pobox: "",
     amount: 0,
   });
+
+  const handleSubmit=()=>{
+    
+  }
   return (
     <div className="flex">
       <div className="md:w-1/3 md:order-2 mb-4">
