@@ -9,7 +9,7 @@ const orderSchema = new Schema({
             quantity:{type:Number, required:true},
             price:{type:Number, required:true},
             amount:{type:Number},
-            products:{type:ObjectId, ref:'Product', required:true},
+            product:{type:ObjectId, ref:'Product', required:true},
         },
         
     ],
@@ -19,7 +19,7 @@ const orderSchema = new Schema({
         default:'COD',
         required:true,
     },
-    orderId:{type:String},
+    // orderId:{type:String},
     address:{type:String},
     email: { type: String },
     name: { type: String, required: true },
