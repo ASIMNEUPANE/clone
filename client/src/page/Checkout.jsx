@@ -1,7 +1,11 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import {create} from '../slices/orderSlice'
+import {  useNavigate } from "react-router";
+import { removeAll } from "../slices/cartSlice";
 export default function checkout() {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   const { cart } = useSelector((state) => state.cart);
   const getTotal = () => {
     return cart.reduce((acc, obj) => acc + obj.price * obj.quantity, 0);
@@ -13,13 +17,31 @@ export default function checkout() {
     address: "",
     country: "",
     paymentMethod: "COD",
-    state: "",
-    pobox: "",
+  
     amount: 0,
   });
 
-  const handleSubmit=()=>{
-    
+  const handleSubmit=async(e)=>{
+    e.preventDefault();
+    const payload = checkout;
+    const {amount,...rest}= payload;
+    rest.amount = getTotal();
+
+    const products = cart.map((item)=>{
+      return{
+        product:item?._id,
+        quantity:Number(item?.quantity),
+        price:Number(item?.price),
+        amount:Number(item?.quantity) * Number(item?.price),
+      }
+    })
+    rest.products= products;
+   const resp = await dispatch(create(rest))
+   if(resp.payload.msg === 'success'){
+    navigate('/products')
+    dispatch(removeAll())
+   }
+   
   }
   return (
     <div className="flex">
@@ -106,8 +128,40 @@ export default function checkout() {
               Please enter a valid email address for shipping updates.
             </div>
           </div>
+          <div className="mb-3">
+            <label htmlFor="text">
+              Address <span className="text-muted">(Optional)</span>
+            </label>
+            <input
+              type="text"
+              className="form-control"
+             
+              placeholder="charnumber,kapilvastu"
+              value={checkout?.address}
+              onChange={(e) =>
+                setCheckout((prev) => ({ ...prev, address: e.target.value }))
+              }
+            />
+           
+          </div>
+          <div className="mb-3">
+            <label htmlFor="text">
+              Country <span className="text-muted">(Optional)</span>
+            </label>
+            <input
+              type="text"
+              className="form-control"
+             
+              placeholder="Nepal"
+              value={checkout?.country}
+              onChange={(e) =>
+                setCheckout((prev) => ({ ...prev, country: e.target.value }))
+              }
+            />
+           
+          </div>
 
-          {/* ... (rest of the form) ... */}
+          
 
           <div className="gap-2">
             <button
