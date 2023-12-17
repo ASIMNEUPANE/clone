@@ -45,7 +45,7 @@ router.delete("/:id", secureApi(["admin"]), async (req, res, next) => {
     next(e);
   }
 });
-router.put("/:id", secureApi(["admin"]), async (req, res, next) => {
+router.patch("/status/:id", secureApi(["admin"]), async (req, res, next) => {
   try {
     const result = await controller.approve(req.params.id, req.body);
     res.json({ data: result, msg: "success" });
