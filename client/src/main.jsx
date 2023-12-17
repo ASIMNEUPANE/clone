@@ -20,8 +20,21 @@ import AdminLayout from "./Layouts/AdminLayout.jsx";
 import Dashboard from "./page/admin/Dashboard.jsx";
 import { AdminRoute, PrivateRoute } from "./components/Routes.jsx";
 
-import {AddProducts,ListProducts,EditProducts} from './page/admin/products/index.jsx'
-import { AddCategories, EditCategories, ListCategories } from "./page/admin/categories/index.jsx";
+import {
+  AddProducts,
+  ListProducts,
+  EditProducts,
+} from "./page/admin/products/index.jsx";
+import {
+  AddCategories,
+  EditCategories,
+  ListCategories,
+} from "./page/admin/categories/index.jsx";
+import {
+  AddOrders,
+  EditOrders,
+  ListOrders,
+} from "./page/admin/orders/index.jsx";
 
 const router = createBrowserRouter([
   {
@@ -101,6 +114,31 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute role="admin">
             <EditCategories />
+          </AdminRoute>
+        ),
+      },
+
+      {
+        path: "/admin/orders",
+        element: (
+          <AdminRoute role="admin">
+            <ListOrders />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/admin/orders/add",
+        element: (
+          <AdminRoute role="admin">
+            <AddOrders />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/admin/orders/:id",
+        element: (
+          <AdminRoute role="admin">
+            <EditOrders />
           </AdminRoute>
         ),
       },
