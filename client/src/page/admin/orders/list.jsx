@@ -3,31 +3,37 @@ import { Link } from "react-router-dom";
 import useOrder from "../../../hooks/useOrder";
 
 export default function list() {
-  const { list, deleteById } = useOrder();
+  const { list, deleteById, approve } = useOrder();
   const [orders, setOrders] = useState([]);
+
+  const handleStatus = async (e, id, status) => {
+    e.preventDefault();
+    const payload =
+      status === "pending" ? { status: "completed" } : { status: "pending" };
+    await approve(id, payload);
+    fetchOrders();
+  };
 
   const handledelete = async (e, id) => {
     e.preventDefault();
-    try{
+    try {
       const resp = await deleteById(id);
-   
-      if (resp.msg ==='success') {
-        fetchOrders()
+
+      if (resp.msg === "success") {
+        fetchOrders();
       }
-    }catch(e){
-      alert(e)
+    } catch (e) {
+      alert(e);
     }
-   
   };
 
   const fetchOrders = useCallback(async () => {
-    try{
+    try {
       const resp = await list();
       setOrders(resp.data);
-    }catch(e){
-      alert(e)
+    } catch (e) {
+      alert(e);
     }
-    
   }, [list]);
 
   useEffect(() => {
@@ -58,7 +64,9 @@ export default function list() {
                     </button>
                   </td>
                   <td className="py-2 px-4 border-b">
-                    <button onClick={(e) => handleStatus(e, order?.id)}>
+                    <button
+                      onClick={(e) => handleStatus(e, order?.id, order?.status)}
+                    >
                       tick
                     </button>
                   </td>
