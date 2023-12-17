@@ -69,12 +69,12 @@ const list = async (limit, page) => {
 };
 
 const getById = async (id) => {
-  return await model.findOne(id);
+  return await model.findOne({_id:id});
 };
 
 const updateById = async (id, payload) => {
   const { products, ...rest } = payload;
-  return await model.findByIdAndUpdate({ id: id }, rest, { new: true });
+  return await model.findOneAndUpdate({ _id: id }, rest, { new: true });
 };
 
 const deleteById = async (id) => {
@@ -99,9 +99,9 @@ const deleteById = async (id) => {
 };
 
 const approve = async(id,payload)=>{
-  const order = await model.findOne({id});
-  if(!order) throw new Error ("order not found");
- return  await model.findOneAndUpdate({id}, {status:payload}, {new:true})
+  // const order = await model.findOne({id});
+  // if(!order) throw new Error ("order not found");
+ return  await model.findOneAndUpdate({id}, payload, {new:true})
 }
 
 module.exports = { create, list, getById, updateById, deleteById ,approve};
