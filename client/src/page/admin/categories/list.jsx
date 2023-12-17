@@ -28,7 +28,7 @@ export default function list() {
             text: "Delete Successful.",
             icon: "success",
           });
-          await list();
+          fetchCat()
         }
       }
     } catch (err) {
