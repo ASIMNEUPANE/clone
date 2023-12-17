@@ -22,7 +22,7 @@ const create = async (payload) => {
 
 const list = async (limit, page) => {
   limit = parseInt(limit) || 3;
-  page = parseInt(page) || 3;
+  page = parseInt(page) || 1;
 
   const response = await model
     .aggregate([
@@ -81,7 +81,7 @@ const deleteById = async (id) => {
   const order = await model.findOne({ id });
   if (!order) throw new Error("product not found");
 
-  const products = order?.product;
+  const products = order?.products;
   products.map(async (product) => {
     const { product: id, quantity } = product;
 
